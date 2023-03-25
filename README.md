@@ -27,5 +27,5 @@ Performance comparisons on four noise types with different levels on the Kodak24
 The distribution of baseline model features is biased across different noise types. Our method produces similar feature distributions across different noise.
 
 ## Citation
-If you use Restormer, please consider citing:
+If you find it helpful, please consider citing:
 
