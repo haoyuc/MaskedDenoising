@@ -29,3 +29,10 @@ The distribution of baseline model features is biased across different noise typ
 ## Citation
 If you find it helpful, please consider citing:
 
+    @inproceedings{chen2023masked,
+      title     = {Masked Image Training for Generalizable Deep Image Denoising}, 
+      author    = {Haoyu Chen and Jinjin Gu and Yihao Liu and Salma Abdel Magid and Chao Dong and Qiong Wang and Hanspeter Pfister and Lei Zhu},
+      booktitle = {Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)},
+      year      = {2023},
+    }
+
