@@ -28,16 +28,15 @@ pip install -r requirement.txt
 > This code is built on [KAIR](https://github.com/cszn/KAIR). We thank the authors for sharing their codes. For more detailed code information, please refer to [KAIR](https://github.com/cszn/KAIR).
 
 
-
 Training
 ----------
 
 You should modify the json file from [options](https://github.com/haoyuc/MaskedDenoising/tree/master/options) first, for example,
 
-- setting [`"gpu_ids": [0,1,2,3]`](https://github.com/cszn/KAIR/blob/ff80d265f64de67dfb3ffa9beff8949773c81a3d/options/train_msrresnet_psnr.json#L4) if 4 GPUs are used,
-- setting [`"dataroot_H": "trainsets/trainH"`](https://github.com/cszn/KAIR/blob/ff80d265f64de67dfb3ffa9beff8949773c81a3d/options/train_msrresnet_psnr.json#L24) if path of the high quality dataset is `trainsets/trainH`, more images are better.
-- **input mask**: setting `"if_mask"` and `"mask1"`, `"mask2"`(line 32-34), the making ratio will randomly sample between mask1 and mask2.
-- **attention mask**: setting `"use_mask"` and `"mask_ratio1"`, `"mask_ratio2"` (line 68-70). The attention mask ratio can be a range or a fixed value.
+- setting [`"gpu_ids": [0,1,2,3]`](https://github.com/haoyuc/MaskedDenoising/blob/8e372c2352e5dd81e2cbab0031f7f2cd0fbcb9c5/options/masked_denoising/input_80_90.json#L4C12-L4C12) if 4 GPUs are used,
+- setting [`"dataroot_H": "trainsets/trainH"`](https://github.com/haoyuc/MaskedDenoising/blob/8e372c2352e5dd81e2cbab0031f7f2cd0fbcb9c5/options/masked_denoising/input_80_90.json#L20C30-L20C30) if path of the high quality dataset is `trainsets/trainH`, more images are better.
+- **input mask**: setting [`"if_mask"`](https://github.com/haoyuc/MaskedDenoising/blob/8e372c2352e5dd81e2cbab0031f7f2cd0fbcb9c5/options/masked_denoising/input_80_90.json#L32C7-L32C7) and `"mask1"`, `"mask2"`(line 32-34), the making ratio will randomly sample between mask1 and mask2.
+- **attention mask**: setting [`"use_mask"`](https://github.com/haoyuc/MaskedDenoising/blob/8e372c2352e5dd81e2cbab0031f7f2cd0fbcb9c5/options/masked_denoising/input_80_90.json#L68) and `"mask_ratio1"`, `"mask_ratio2"` (line 68-70). The attention mask ratio can be a range or a fixed value.
 
 
 ---
@@ -46,14 +45,14 @@ You should modify the json file from [options](https://github.com/haoyuc/MaskedD
 
 
 ```bash
-python main_train_psnr.py --opt options/denoise_input_80_90.json
+python main_train_psnr.py --opt options/input_80_90.json
 ```
 
 
 - Training with `DistributedDataParallel` - PSNR - 4 GPUs
 
 ```bash
-python -m torch.distributed.launch --nproc_per_node=4 --master_port=1234 main_train_psnr.py --opt options/denoise_input_80_90.json  --dist True
+python -m torch.distributed.launch --nproc_per_node=4 --master_port=1234 main_train_psnr.py --opt options/input_80_90.json  --dist True
 ```
 
 
