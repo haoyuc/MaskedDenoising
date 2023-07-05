@@ -13,16 +13,95 @@
 The transformer architecture of our proposed masked image training. We only make the minimal change to the original SwinIR architecture – the ***input mask*** operation and the ***attention masks***.
 
 
-## Results
-![](./figs/results.jpg)
-Visual comparison on ***out-of-distribution*** noise. All the networks are trained using Gaussian noise with standard deviation σ = 15. When all other methods fail completely, our method is still able to denoise effectively.
 
-![](./figs/results2.jpg)
-Performance comparisons on four noise types with different levels on the Kodak24 dataset. All models are trained only on Gaussian noise. Our masked training approach demonstrates good generalization performance across different noise types. We involve multiple types and levels of noise in testing, the results cannot be shown here. 
 
-![](./figs/distribution.jpg)
-The distribution of baseline model features is biased across different noise types. Our method produces similar feature distributions across different noise.
+Clone repo
+----------
+```
+git clone https://github.com/haoyuc/MaskedDenoising.git
+```
+```
+pip install -r requirement.txt
+```
 
-## Citation
-If you use Restormer, please consider citing:
 
+> This code is built on [KAIR](https://github.com/cszn/KAIR). We thank the authors for sharing their codes. For more detailed code information, please refer to [KAIR](https://github.com/cszn/KAIR).
+
+
+
+Training
+----------
+
+You should modify the json file from [options](https://github.com/haoyuc/MaskedDenoising/tree/master/options) first, for example,
+
+- setting [`"gpu_ids": [0,1,2,3]`](https://github.com/cszn/KAIR/blob/ff80d265f64de67dfb3ffa9beff8949773c81a3d/options/train_msrresnet_psnr.json#L4) if 4 GPUs are used,
+- setting [`"dataroot_H": "trainsets/trainH"`](https://github.com/cszn/KAIR/blob/ff80d265f64de67dfb3ffa9beff8949773c81a3d/options/train_msrresnet_psnr.json#L24) if path of the high quality dataset is `trainsets/trainH`, more images are better.
+- **input mask**: setting `"if_mask"` and `"mask1"`, `"mask2"`(line 32-34), the making ratio will randomly sample between mask1 and mask2.
+- **attention mask**: setting `"use_mask"` and `"mask_ratio1"`, `"mask_ratio2"` (line 68-70). The attention mask ratio can be a range or a fixed value.
+
+
+---
+
+- Training with `DataParallel` - PSNR
+
+
+```bash
+python main_train_psnr.py --opt options/denoise_input_80_90.json
+```
+
+
+- Training with `DistributedDataParallel` - PSNR - 4 GPUs
+
+```bash
+python -m torch.distributed.launch --nproc_per_node=4 --master_port=1234 main_train_psnr.py --opt options/denoise_input_80_90.json  --dist True
+```
+
+
+- Kill distributed training processes of `main_train_psnr.py`
+
+```bash
+kill $(ps aux | grep main_train_psnr.py | grep -v grep | awk '{print $2}')
+```
+
+Testing
+----------
+
+```bash
+python main_test_swinir.py \
+        --model_path model_zoo/input_mask_80_90.pth  \
+        --name input_mask_80_90/McM_poisson_20  \
+        --opt model_zoo/input_mask_80_90.json \
+        --folder_gt testset/McM/HR  \
+        --folder_lq testset/McM/McM_poisson_20
+```
+
+
+trainsets
+----------
+You can use more images for better porformance.    
+- [DIV2K](https://data.vision.ee.ethz.ch/cvl/DIV2K/)   
+- [Flickr2K](https://cv.snu.ac.kr/research/EDSR/Flickr2K.tar)   
+- BSD500   
+- WED   
+
+
+testsets
+-----------
+- [cbsd68](https://github.com/cszn/FFDNet/tree/master/testsets)
+- [kodak24](https://github.com/cszn/FFDNet/tree/master/testsets)
+- urban100
+- McMaster
+
+
+References
+----------
+```BibTex
+@InProceedings{Chen_2023_CVPR,
+    author    = {Chen, Haoyu and Gu, Jinjin and Liu, Yihao and Magid, Salma Abdel and Dong, Chao and Wang, Qiong and Pfister, Hanspeter and Zhu, Lei},
+    title     = {Masked Image Training for Generalizable Deep Image Denoising},
+    booktitle = {Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)},
+    month     = {June},
+    year      = {2023},
+    pages     = {1692-1703}
+}
+```
