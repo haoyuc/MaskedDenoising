@@ -30,6 +30,7 @@ pip install -r requirement.txt
 
 Training
 ----------
+We train the model on images with Gaussian noise (sigma=15), and test the model on different noise type and noise level.
 
 You should modify the json file from [options](https://github.com/haoyuc/MaskedDenoising/tree/master/options) first, for example,
 
