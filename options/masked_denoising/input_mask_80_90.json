@@ -39,7 +39,7 @@
         "name": "test_dataset"            // just name
         , "dataset_type": "plain"         // "dncnn" | "dnpatch" | "fdncnn" | "ffdnet" | "sr" | "srmd" | "dpsr" | "plain" | "plainpatch" | "jpeg"
         , "dataroot_H": "testset/McM/HR"  // path of H testing dataset
-        , "dataroot_L": "testset/McM/McM_poisson_20"    // path of L testing dataset
+        , "dataroot_L": "testset/McM/McM_poisson_20"    // path of L testing dataset, Poisson noise with alpha=2
     
       }
     }
