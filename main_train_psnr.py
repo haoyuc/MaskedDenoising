@@ -326,6 +326,8 @@ def main(json_path='options/train_msrresnet_psnr.json'):
 
                 writer.add_scalar('PSNRY', avg_psnrY, global_step=current_step)
                 writer.add_scalar('SSIMY', avg_ssimY, global_step=current_step)
+                writer.add_scalar('PSNR',  avg_psnr,  global_step=current_step)
+                writer.add_scalar('SSIM',  avg_ssim,  global_step=current_step)
                 writer.add_scalar('LPIPS', avg_lpips, global_step=current_step)
 
 
