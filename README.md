@@ -28,9 +28,21 @@ pip install -r requirement.txt
 > This code is built on [KAIR](https://github.com/cszn/KAIR). We thank the authors for sharing their codes. For more detailed code information, please refer to [KAIR](https://github.com/cszn/KAIR).
 
 
+----------
+
+**The core code we used:**
+
+Input mask: https://github.com/haoyuc/MaskedDenoising/blob/b4cb8edb51a87301fcb70039fb550fc6aca730ac/data/dataset_masked_denoising.py#L60
+
+Attention mask:
+https://github.com/haoyuc/MaskedDenoising/blob/b4cb8edb51a87301fcb70039fb550fc6aca730ac/models/network_swinir.py#L273
+
+
 Training
 ----------
-We train the model on images with Gaussian noise (sigma=15), and test the model on different noise type and noise level.
+❗️ We train the model only on **Gaussian noise (sigma=15)**, and test the model on other noise types and noise levels.
+
+<br/>
 
 You should modify the json file from [options](https://github.com/haoyuc/MaskedDenoising/tree/master/options) first, for example,
 
@@ -65,6 +77,8 @@ kill $(ps aux | grep main_train_psnr.py | grep -v grep | awk '{print $2}')
 
 Testing
 ----------
+The pre-trained models have already been included in this repository (model_zoo/input_mask_80_90.pth).      
+❗️ Please note that this model was trained solely on **Gaussian noise (sigma=15)**.
 
 ```bash
 python main_test_swinir.py \
