@@ -40,7 +40,9 @@ https://github.com/haoyuc/MaskedDenoising/blob/b4cb8edb51a87301fcb70039fb550fc6a
 
 Training
 ----------
-❗️ We train the model only on **Gaussian noise (sigma=15)**, and test the model on other noise types and noise levels.
+❗️ This project is more oriented towards exploring how to make the model have better generalization capabilities when the degraded distribution of the training data is limited.    
+We train the model **only on Gaussian noise (sigma=15)**, and test the model on other noise types and noise levels. So this project may not be suitable for certain practical applications.
+
 
 <br/>
 
